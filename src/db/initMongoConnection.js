@@ -13,7 +13,7 @@ export const initMongoConnection = async () => {
       `mongodb+srv://${user}:${password}@${url}/${db}?retryWrites=true&w=majority`,
     );
 
-    console.log('Mongo connection successfully established!');
+    console.log('Mongo connection successfully established!!!');
   } catch (error) {
     console.log(error);
   }
