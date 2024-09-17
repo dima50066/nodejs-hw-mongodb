@@ -11,9 +11,9 @@ export const getContacts = async () => {
 
 export const getContactsById = async (id) => {
   try {
-    const contact = await StudentsCollection.findById({ contactId });
+    const contact = await StudentsCollection.findById({ id });
     return contact;
   } catch (error) {
-    console.log('Error: fetching contacts', error);
+    console.log('Error: fetching contacts with ID ${id}', error);
   }
 };

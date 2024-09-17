@@ -31,13 +31,12 @@ export const setupServer = () => {
 
   app.get('/contacts', async (req, res) => {
     const contacts = await getContacts();
-    res.status(200).json;
-    ({ data: contacts });
+    res.status(200).json({ data: contacts });
   });
 
   app.get('/contacts/:id', async (req, res) => {
-    const { contactId } = req.params;
-    const contact = await getContactsById(contactId);
+    const { id } = req.params;
+    const contact = await getContactsById(id);
     if (!contact) {
       res.status(404).json({
         message: 'Not found',
