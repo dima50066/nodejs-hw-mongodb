@@ -3,6 +3,8 @@ import { ContactsCollection } from '../db/models/contacts.js';
 export const getContacts = async () => {
   try {
     const contacts = await ContactsCollection.find();
+    console.log('Fetching contacts', contacts);
+
     if (!contacts || contacts.length === 0) {
       console.log('No contacts found');
     }
@@ -15,7 +17,7 @@ export const getContacts = async () => {
 
 export const getContactsById = async (id) => {
   try {
-    const contact = await ContactsCollection.findById({ id });
+    const contact = await ContactsCollection.findById(id);
     return contact;
   } catch (error) {
     console.log('Error: fetching contacts with ID ${id}', error);
