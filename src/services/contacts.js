@@ -23,3 +23,32 @@ export const getContactsById = async (id) => {
     console.log('Error: fetching contacts with ID ${id}', error);
   }
 };
+
+export const createContact = async (payload) => {
+  const contact = await ContactsCollection.create(payload);
+  return contact;
+};
+
+export const deleteContact = async (id) => {
+  const contact = await ContactsCollection.findByIdAndDelete(id);
+  return contact;
+};
+
+export const updateContact = async (id, payload, options) => {
+  const contact = await ContactsCollection.findOneAndUpdate(
+    { _id: id },
+    payload,
+    {
+      new: true,
+      includeResultMetadatas: true,
+      ...options,
+    },
+  );
+
+  if (!contact || !contact.value) return null;
+
+  return {
+    contact: contact.value,
+    isNew: Boolean(!contact.lastErrorObject.upserted),
+  };
+};
