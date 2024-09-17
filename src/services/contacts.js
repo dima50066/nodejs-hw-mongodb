@@ -40,7 +40,7 @@ export const updateContact = async (id, payload, options) => {
     payload,
     {
       new: true,
-      includeResultMetadatas: true,
+      includeResultMetadata: true,
       ...options,
     },
   );
