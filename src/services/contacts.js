@@ -3,9 +3,13 @@ import { StudentsCollection } from '../db/models/contacts.js';
 export const getContacts = async () => {
   try {
     const contacts = await StudentsCollection.find();
+    if (!contacts || contacts.length === 0) {
+      console.log('No contacts found');
+    }
     return contacts;
   } catch (error) {
     console.log('Error: fetching contacts', error);
+    throw error;
   }
 };
 
