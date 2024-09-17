@@ -31,9 +31,8 @@ export const setupServer = () => {
 
   app.get('/contacts', async (req, res) => {
     const contacts = await getContacts();
-    console.log(contacts);
-
-    res.status(200).json({ data: contacts });
+    res.status(200).json;
+    ({ data: contacts });
   });
 
   app.get('/contacts/:id', async (req, res) => {
