@@ -1,9 +1,12 @@
-// src/db/models/student.js
-
-import { Schema, model } from 'mongoose';
+import { Schema, model, mongoose } from 'mongoose';
 
 const contactsSchema = new Schema(
   {
+    userId: {
+      type: String,
+      ref: 'users',
+      required: true,
+    },
     name: {
       type: String,
       required: true,
