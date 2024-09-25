@@ -14,14 +14,14 @@ const router = new Router();
 
 router.get('/contacts', ctrlWrapper(getContactsController));
 
-router.get('/contacts/:id', ctrlWrapper(getContactByIdController));
+router.get('/contacts/:contactId', ctrlWrapper(getContactByIdController));
 
 router.post('/contacts', ctrlWrapper(createContactController));
 
-router.delete('/contacts/:id', ctrlWrapper(deleteContactController));
+router.delete('/contacts/:contactId', ctrlWrapper(deleteContactController));
 
-router.put('/contacts/:id', ctrlWrapper(upsertContactController));
+router.put('/contacts/:contactId', ctrlWrapper(upsertContactController));
 
-router.patch('/contacts/:id', ctrlWrapper(patchContactController));
+router.patch('/contacts/:contactId', ctrlWrapper(patchContactController));
 
 export default router;

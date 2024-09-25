@@ -3,24 +3,18 @@ import { ContactsCollection } from '../db/models/contacts.js';
 export const getContacts = async () => {
   try {
     const contacts = await ContactsCollection.find();
-    console.log('Fetching contacts', contacts);
-
-    if (!contacts || contacts.length === 0) {
-      console.log('No contacts found');
-    }
     return contacts;
   } catch (error) {
-    console.log('Error: fetching contacts', error);
-    throw error;
+    throw error; // Прокидуємо помилку далі
   }
 };
 
 export const getContactsById = async (id) => {
   try {
     const contact = await ContactsCollection.findById(id);
-    return contact;
+    return contact; // Повертаємо contact, навіть якщо він null
   } catch (error) {
-    console.log('Error: fetching contacts with ID ${id}', error);
+    throw error; // Прокидуємо помилку далі
   }
 };
 
@@ -45,7 +39,7 @@ export const updateContact = async (id, payload, options) => {
     },
   );
 
-  if (!contact || !contact.value) return null;
+  if (!contact) return null;
 
   return {
     contact: contact.value,
