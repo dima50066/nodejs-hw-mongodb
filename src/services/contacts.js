@@ -16,21 +16,21 @@ export const getContacts = async ({
     [sortBy]: sortOrder === 'asc' ? 1 : -1,
   };
 
-  const contactsQuery = ContactsCollection.find(filter)
-    .sort(sortOptions)
-    .skip(skip)
-    .limit(limit);
-
-  const [contactsCount, contacts] = await Promise.all([
-    ContactsCollection.find(filter),
-    contactsQuery.exec(),
+  const [totalItems, contacts] = await Promise.all([
+    ContactsCollection.countDocuments(filter),
+    ContactsCollection.find(filter).sort(sortOptions).skip(skip).limit(limit),
   ]);
 
-  const paginationData = calculatePaginationData(contactsCount, perPage, page);
+  const paginationData = calculatePaginationData(totalItems, perPage, page);
 
   return {
     data: contacts,
-    ...paginationData,
+    page,
+    perPage,
+    totalItems,
+    totalPages: paginationData.totalPages,
+    hasPreviousPage: paginationData.hasPreviousPage,
+    hasNextPage: paginationData.hasNextPage,
   };
 };
 

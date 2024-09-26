@@ -28,21 +28,29 @@ router.post(
 
 router.get('/contacts', ctrlWrapper(getContactsController));
 
-router.get('/contacts/:id', isValidId, ctrlWrapper(getContactByIdController));
+router.get(
+  '/contacts/:contactId',
+  isValidId,
+  ctrlWrapper(getContactByIdController),
+);
 
 router.post('/contacts', ctrlWrapper(createContactController));
 
-router.delete('/contacts/:id', isValidId, ctrlWrapper(deleteContactController));
+router.delete(
+  '/contacts/:contactId',
+  isValidId,
+  ctrlWrapper(deleteContactController),
+);
 
 router.put(
-  '/contacts/:id',
+  '/contacts/:contactId',
   isValidId,
-  validateBody(createContactSchema),
+  validateBody(updateContactSchema),
   ctrlWrapper(upsertContactController),
 );
 
 router.patch(
-  '/contacts/:id',
+  '/contacts/:contactId',
   isValidId,
   validateBody(updateContactSchema),
   ctrlWrapper(patchContactController),
