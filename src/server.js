@@ -28,6 +28,10 @@ export const setupServer = () => {
     }),
   );
 
+  app.get('/', (req, res) => {
+    res.json({ message: 'Welcome to the Contacts API' });
+  });
+
   app.use(router);
 
   app.use((req, res, next) => {
