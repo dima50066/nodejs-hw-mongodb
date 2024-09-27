@@ -35,7 +35,7 @@ router.post(
 );
 
 router.put(
-  '/',
+  '/:contactId',
   isValidId,
   validateBody(createContactSchema),
   ctrlWrapper(upsertContactController),
