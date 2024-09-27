@@ -60,21 +60,22 @@ export const deleteContact = async (id, userId) => {
   return contact;
 };
 
-export const updateContact = async (id, payload, options, userId) => {
+export const updateContact = async (id, payload, options) => {
   const contact = await ContactsCollection.findOneAndUpdate(
-    { _id: id, userId },
+    { _id: id, userId: payload.userId },
     payload,
     {
       new: true,
-      includeResultMetadata: true,
       ...options,
     },
   );
 
-  if (!contact || !contact.value) return null;
+  if (!contact) {
+    return null; // Повертаємо null, якщо контакт не знайдено
+  }
 
   return {
-    contact: contact.value,
-    isNew: Boolean(!contact.lastErrorObject.upserted),
+    contact,
+    isNew: Boolean(contact?.lastErrorObject?.upserted),
   };
 };

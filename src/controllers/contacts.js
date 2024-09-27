@@ -142,13 +142,13 @@ export const patchContactController = async (req, res, next) => {
   try {
     const { contactId } = req.params;
 
-    const contact = await getContactsById(contactId, req.user._id); // Перевірка контакту
+    const contact = await getContactsById(contactId, req.user._id);
 
     if (!contact) {
       return next(createHttpError(404, 'Contact not found'));
     }
 
-    const result = await updateContact(contactId, {
+    const updatedContact = await updateContact(contactId, {
       ...req.body,
       userId: req.user._id,
     });
@@ -156,7 +156,7 @@ export const patchContactController = async (req, res, next) => {
     res.json({
       status: 200,
       message: 'Contact patched successfully',
-      data: result.contact,
+      data: updatedContact.contact,
     });
   } catch (error) {
     console.error('Error patching contact:', error);
