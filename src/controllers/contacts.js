@@ -138,19 +138,24 @@ export const upsertContactController = async (req, res, next) => {
 export const patchContactController = async (req, res, next) => {
   try {
     const { contactId } = req.params;
+    console.log(`Patching contact with ID: ${contactId}`);
 
     const photo = req.file;
+    console.log(`Received photo: ${photo ? photo.originalname : 'No photo'}`);
 
     let photoUrl;
     if (photo) {
+      console.log('Attempting to upload photo...');
       if (env('ENABLE_CLOUDINARY') === 'true') {
         photoUrl = await saveFileToCloudinary(photo);
       } else {
         photoUrl = await saveFileToUploadDir(photo);
       }
+      console.log(`Photo URL: ${photoUrl}`);
     }
 
     const contact = await getContactsById(contactId, req.user._id);
+    console.log(`Contact found: ${contact ? contact.name : 'Not found'}`);
 
     if (!contact) {
       return next(createHttpError(404, 'Contact not found'));
