@@ -11,6 +11,10 @@ import { parseSortParams } from '../utils/parseSortParams.js';
 import { parseFilterParams } from '../utils/parseFilterParams.js';
 import { createContactSchema } from '../validation/contacts.js';
 
+import { saveFileToCloudinary } from '../utils/fileUploader.js';
+import { saveFileToUploadDir } from '../utils/saveFileToUploadDir.js';
+import { env } from '../utils/env.js';
+
 export const getContactsController = async (req, res, next) => {
   try {
     const { page, perPage } = parsePaginationParams(req.query);
@@ -60,15 +64,11 @@ export const getContactByIdController = async (req, res, next) => {
 
 export const createContactController = async (req, res, next) => {
   try {
-    console.log('User from request:', req.user); // Логування user
-    console.log('Request body:', req.body);
-
     if (!req.user || !req.user._id) {
       return res.status(400).json({ message: 'User ID is missing' });
     }
 
     const userId = req.user._id.toString();
-    console.log('User ID:', userId);
 
     // Валідація контактних даних
     const { error } = createContactSchema.validate({
@@ -142,6 +142,17 @@ export const patchContactController = async (req, res, next) => {
   try {
     const { contactId } = req.params;
 
+    const photo = req.file;
+
+    let photoUrl;
+    if (photo) {
+      if ((env === 'ENABLE_CLOUDINARY') === 'true') {
+        photoUrl = await saveFileToCloudinary(photo);
+      } else {
+        photoUrl = await saveFileToUploadDir(photo);
+      }
+    }
+
     const contact = await getContactsById(contactId, req.user._id);
 
     if (!contact) {
@@ -151,6 +162,7 @@ export const patchContactController = async (req, res, next) => {
     const updatedContact = await updateContact(contactId, {
       ...req.body,
       userId: req.user._id,
+      photo: photoUrl,
     });
 
     res.json({
