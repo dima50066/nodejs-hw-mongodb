@@ -14,8 +14,13 @@ cloudinary.v2.config({
 
 export const saveFileToCloudinary = async (file) => {
   try {
+    console.log(`Uploading file to Cloudinary from path: ${file.path}`);
     const response = await cloudinary.v2.uploader.upload(file.path);
+    console.log(`Cloudinary response: ${JSON.stringify(response)}`);
+
     await fs.unlink(file.path);
+    console.log(`Deleted local file: ${file.path}`);
+
     return response.secure_url;
   } catch (error) {
     console.error('Cloudinary upload error:', error);

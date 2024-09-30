@@ -147,8 +147,10 @@ export const patchContactController = async (req, res, next) => {
     if (photo) {
       console.log('Attempting to upload photo...');
       if (env('ENABLE_CLOUDINARY') === 'true') {
+        console.log('Uploading photo to Cloudinary...');
         photoUrl = await saveFileToCloudinary(photo);
       } else {
+        console.log('Saving photo to local upload directory...');
         photoUrl = await saveFileToUploadDir(photo);
       }
       console.log(`Photo URL: ${photoUrl}`);
