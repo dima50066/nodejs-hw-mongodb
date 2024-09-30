@@ -11,7 +11,7 @@ import { parseSortParams } from '../utils/parseSortParams.js';
 import { parseFilterParams } from '../utils/parseFilterParams.js';
 import { createContactSchema } from '../validation/contacts.js';
 
-import { saveFileToCloudinary } from '../utils/fileUploader.js';
+import { saveFileToCloudinary } from '../utils/saveFileToCloudinary.js';
 import { saveFileToUploadDir } from '../utils/saveFileToUploadDir.js';
 import { env } from '../utils/env.js';
 
@@ -71,10 +71,7 @@ export const createContactController = async (req, res, next) => {
     const userId = req.user._id.toString();
 
     // Валідація контактних даних
-    const { error } = createContactSchema.validate({
-      ...req.body,
-      userId,
-    });
+    const { error } = createContactSchema.validate(req.body);
     if (error) {
       console.log('Validation error:', error.details);
       return res.status(400).json({ message: error.details[0].message });
@@ -146,7 +143,7 @@ export const patchContactController = async (req, res, next) => {
 
     let photoUrl;
     if (photo) {
-      if ((env === 'ENABLE_CLOUDINARY') === 'true') {
+      if (env('ENABLE_CLOUDINARY') === 'true') {
         photoUrl = await saveFileToCloudinary(photo);
       } else {
         photoUrl = await saveFileToUploadDir(photo);
