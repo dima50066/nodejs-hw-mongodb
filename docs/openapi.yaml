@@ -1,20 +1,40 @@
-openapi: 3.1.0
+openapi: 3.0.0
+
 info:
+  title: Contacts API
   version: 1.0.0
-  title: <назва вашого додатку>
   license:
     name: Apache 2.0
-    url: http://www.apache.org/licenses/LICENSE-2.0.html
-  description: <опис вашого додатку>
-tags:
-  # теги, що ви будете використовувати
+    url: https://www.apache.org/licenses/LICENSE-2.0
 servers:
   - url: http://localhost:3000
-  - url: #посилання на задеплоєний сайт
-paths:
-  # тут будуть посилання на ендпоінти
+    description: Development server
+security:
+  - bearerAuth: []
+
 components:
   securitySchemes:
     bearerAuth:
       type: http
       scheme: bearer
+      bearerFormat: JWT
+  responses:
+    NotFound:
+      $ref: './swagger/components/responses/notFound.yaml'
+  schemas:
+    Contact:
+      $ref: './swagger/components/schemas/contacts.yaml'
+
+paths:
+  /contacts:
+    get:
+      $ref: './swagger/path/contacts/get.yaml'
+    post:
+      $ref: './swagger/path/contacts/post.yaml'
+  /contacts/{contactId}:
+    get:
+      $ref: './swagger/path/contacts/{id}/get.yaml'
+    patch:
+      $ref: './swagger/path/contacts/{id}/patch.yaml'
+    delete:
+      $ref: './swagger/path/contacts/{id}/delete.yaml'
