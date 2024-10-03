@@ -1,17 +1,15 @@
 openapi: 3.0.0
-
+security:
+  - bearerAuth: []
 info:
   title: Contacts API
   version: 1.0.0
+  description: API for managing contacts
   license:
     name: Apache 2.0
     url: https://www.apache.org/licenses/LICENSE-2.0
 servers:
   - url: http://localhost:3000
-    description: Development server
-security:
-  - bearerAuth: []
-
 components:
   securitySchemes:
     bearerAuth:
@@ -24,7 +22,6 @@ components:
   schemas:
     Contact:
       $ref: './swagger/components/schemas/contacts.yaml'
-
 paths:
   /contacts:
     get:

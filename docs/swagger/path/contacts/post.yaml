@@ -13,4 +13,12 @@ responses:
   '201':
     description: Contact created successfully.
   '400':
-    description: Invalid input data.
+    description: User ID is missing in the request.
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            message:
+              type: string
+              example: 'User ID is missing.'

@@ -20,4 +20,4 @@ responses:
         schema:
           $ref: ..\..\..\components\schemas\contacts.yaml
   '404':
-    description: Contact not found.
+    $ref: ..\..\..\components\responses\notFound.yaml
