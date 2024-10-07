@@ -1,6 +1,6 @@
 import { Schema, model, mongoose } from 'mongoose';
 
-const studentsSchema = new Schema(
+const contactsSchema = new Schema(
   {
     userId: {
       type: String,
@@ -36,7 +36,8 @@ const studentsSchema = new Schema(
   },
   {
     timestamps: true,
+    versionKey: false,
   },
 );
 
-export const StudentsCollection = model('Students', studentsSchema);
+export const ContactsCollection = model('Contacts', contactsSchema);
