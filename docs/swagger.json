@@ -43,6 +43,55 @@
         "description": "Retrieve a list of all contacts for the authenticated user.",
         "parameters": [
           {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "description": "Page number.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "perPage",
+            "in": "query",
+            "required": false,
+            "description": "Number of items per page.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "sortOrder",
+            "in": "query",
+            "required": false,
+            "description": "Sorted in ascending or descending order",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "asc",
+                "desc"
+              ]
+            }
+          },
+          {
+            "name": "sortBy",
+            "in": "query",
+            "required": false,
+            "description": "Sort contacts by a specific field.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "name",
+                "phoneNumber",
+                "email",
+                "contactType",
+                "isFavourite",
+                "createdAt",
+                "updatedAt"
+              ]
+            }
+          },
+          {
             "name": "contactType",
             "in": "query",
             "required": false,
@@ -95,9 +144,51 @@
         "requestBody": {
           "required": true,
           "content": {
-            "application/json": {
+            "multipart/form-data": {
               "schema": {
-                "$ref": "#/components/schemas/contacts"
+                "type": "object",
+                "properties": {
+                  "photo": {
+                    "type": "string",
+                    "format": "binary",
+                    "description": "The contact photo to upload (file)."
+                  },
+                  "contactData": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "description": "Name of the contact."
+                      },
+                      "phoneNumber": {
+                        "type": "string",
+                        "description": "Phone number of the contact."
+                      },
+                      "contactType": {
+                        "type": "string",
+                        "enum": [
+                          "personal",
+                          "work"
+                        ],
+                        "description": "Type of contact (personal or work)."
+                      },
+                      "email": {
+                        "type": "string",
+                        "format": "email",
+                        "description": "Email of the contact."
+                      },
+                      "isFavourite": {
+                        "type": "boolean",
+                        "description": "Whether the contact is marked as favourite."
+                      }
+                    },
+                    "required": [
+                      "name",
+                      "phoneNumber"
+                    ]
+                  }
+                },
+                "description": "Object containing fields to create a contact. Include only the required fields."
               }
             }
           }
@@ -107,7 +198,7 @@
             "description": "Contact created successfully."
           },
           "400": {
-            "description": "User ID is missing in the request.",
+            "description": "Invalid data in the request.",
             "content": {
               "application/json": {
                 "schema": {
@@ -115,7 +206,7 @@
                   "properties": {
                     "message": {
                       "type": "string",
-                      "example": "User ID is missing."
+                      "example": "Invalid data provided."
                     }
                   }
                 }
@@ -171,7 +262,7 @@
         ],
         "summary": "Update a contact by ID",
         "operationId": "updateContact",
-        "description": "Update a specific contact using their unique identifier.",
+        "description": "Update specific contact fields using their unique identifier.",
         "parameters": [
           {
             "name": "contactId",
@@ -186,9 +277,47 @@
         "requestBody": {
           "required": true,
           "content": {
-            "application/json": {
+            "multipart/form-data": {
               "schema": {
-                "$ref": "#/components/schemas/contacts"
+                "type": "object",
+                "properties": {
+                  "photo": {
+                    "type": "string",
+                    "format": "binary",
+                    "description": "The contact photo to upload (file). If both a photo file and a URL are provided, the file will take precedence."
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "Name of the contact."
+                  },
+                  "phoneNumber": {
+                    "type": "string",
+                    "description": "Phone number of the contact."
+                  },
+                  "contactType": {
+                    "type": "string",
+                    "enum": [
+                      "personal",
+                      "work",
+                      "home"
+                    ],
+                    "description": "Type of contact."
+                  },
+                  "email": {
+                    "type": "string",
+                    "format": "email",
+                    "description": "Email of the contact."
+                  },
+                  "isFavourite": {
+                    "type": "boolean",
+                    "description": "Whether the contact is marked as favourite."
+                  }
+                },
+                "required": [
+                  "name",
+                  "phoneNumber"
+                ],
+                "description": "Object containing fields to update for the contact. Only include the fields that need to be updated."
               }
             }
           }
