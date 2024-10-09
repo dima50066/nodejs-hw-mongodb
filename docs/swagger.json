@@ -151,44 +151,46 @@
                   "photo": {
                     "type": "string",
                     "format": "binary",
-                    "description": "The contact photo to upload (file)."
+                    "description": "The contact photo to upload (file). If both a photo file and a URL are provided, the file will take precedence.",
+                    "example": null
                   },
-                  "contactData": {
-                    "type": "object",
-                    "properties": {
-                      "name": {
-                        "type": "string",
-                        "description": "Name of the contact."
-                      },
-                      "phoneNumber": {
-                        "type": "string",
-                        "description": "Phone number of the contact."
-                      },
-                      "contactType": {
-                        "type": "string",
-                        "enum": [
-                          "personal",
-                          "work"
-                        ],
-                        "description": "Type of contact (personal or work)."
-                      },
-                      "email": {
-                        "type": "string",
-                        "format": "email",
-                        "description": "Email of the contact."
-                      },
-                      "isFavourite": {
-                        "type": "boolean",
-                        "description": "Whether the contact is marked as favourite."
-                      }
-                    },
-                    "required": [
-                      "name",
-                      "phoneNumber"
-                    ]
+                  "name": {
+                    "type": "string",
+                    "description": "Name of the contact.",
+                    "example": "dmytro"
+                  },
+                  "phoneNumber": {
+                    "type": "string",
+                    "description": "Phone number of the contact.",
+                    "example": 380123456789
+                  },
+                  "contactType": {
+                    "type": "string",
+                    "enum": [
+                      "personal",
+                      "work",
+                      "home"
+                    ],
+                    "description": "Type of contact.",
+                    "example": "work"
+                  },
+                  "email": {
+                    "type": "string",
+                    "format": "email",
+                    "description": "Email of the contact.",
+                    "example": "dima50066@gmail.com"
+                  },
+                  "isFavourite": {
+                    "type": "boolean",
+                    "description": "Whether the contact is marked as favourite.",
+                    "example": true
                   }
                 },
-                "description": "Object containing fields to create a contact. Include only the required fields."
+                "required": [
+                  "name",
+                  "phoneNumber"
+                ],
+                "description": "Object containing fields to update for the contact. Only include the fields that need to be updated."
               }
             }
           }
@@ -288,11 +290,13 @@
                   },
                   "name": {
                     "type": "string",
-                    "description": "Name of the contact."
+                    "description": "Name of the contact.",
+                    "example": "dmytro"
                   },
                   "phoneNumber": {
                     "type": "string",
-                    "description": "Phone number of the contact."
+                    "description": "Phone number of the contact.",
+                    "example": 380123456789
                   },
                   "contactType": {
                     "type": "string",
@@ -301,16 +305,19 @@
                       "work",
                       "home"
                     ],
-                    "description": "Type of contact."
+                    "description": "Type of contact.",
+                    "example": "home"
                   },
                   "email": {
                     "type": "string",
                     "format": "email",
-                    "description": "Email of the contact."
+                    "description": "Email of the contact.",
+                    "example": "DqT6Z@example.com"
                   },
                   "isFavourite": {
                     "type": "boolean",
-                    "description": "Whether the contact is marked as favourite."
+                    "description": "Whether the contact is marked as favourite.",
+                    "example": true
                   }
                 },
                 "required": [
