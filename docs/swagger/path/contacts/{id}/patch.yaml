@@ -11,7 +11,6 @@ parameters:
     schema:
       type: string
 requestBody:
-  required: true
   content:
     multipart/form-data:
       schema:
@@ -46,9 +45,6 @@ requestBody:
             type: boolean
             description: Whether the contact is marked as favourite.
             example: true
-        required:
-          - name
-          - phoneNumber
         description: 'Object containing fields to update for the contact. Only include the fields that need to be updated.'
 responses:
   '200':

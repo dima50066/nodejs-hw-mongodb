@@ -277,7 +277,6 @@
           }
         ],
         "requestBody": {
-          "required": true,
           "content": {
             "multipart/form-data": {
               "schema": {
@@ -320,10 +319,6 @@
                     "example": true
                   }
                 },
-                "required": [
-                  "name",
-                  "phoneNumber"
-                ],
                 "description": "Object containing fields to update for the contact. Only include the fields that need to be updated."
               }
             }
